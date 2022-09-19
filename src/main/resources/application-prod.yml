@@ -1,0 +1,14 @@
+#log-file-path: E:/file/water-food/log
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://112.74.73.147:3569/survey?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    # 数据库用户名&密码：
+    username: wyj
+    password: wyj123
+
+
+server:
+  port: 8022
+
+

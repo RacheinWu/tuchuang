@@ -1,0 +1,70 @@
+package com.rachein.tuchuang.core.service.impl;
+
+import com.rachein.tuchuang.entity.DB.FileDB;
+import com.rachein.tuchuang.core.mapper.FileMapper;
+import com.rachein.tuchuang.core.service.IFileService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.rachein.tuchuang.exception.GlobalException;
+import com.rachein.tuchuang.result.CodeMsg;
+import com.rachein.tuchuang.utils.UUIDUtil;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * <p>
+ * 文件 服务实现类
+ * </p>
+ *
+ * @author 吴远健
+ * @since 2022-09-19
+ */
+@Service
+public class FileServiceImpl extends ServiceImpl<FileMapper, FileDB> implements IFileService {
+
+    @Value("${file.path.from}")
+    private String from_path;
+
+    @Value("${file.path.local}")
+    private String local_path;
+
+    @Override
+    public String upload(MultipartFile file, String type, String appid) {
+        //是否存在文件
+        if (file == null || file.getContentType().equals("application/octer-stream")) throw new GlobalException(CodeMsg.FILE_EMPTY);
+        //检测文件大小
+        long size = file.getSize();
+        if (size > 500E6) throw new GlobalException(CodeMsg.FILE_MEMORY_OVER);
+        //originalName:
+        String originalFilename = file.getOriginalFilename();
+        //获取后缀
+        String extension = "." + FilenameUtils.getExtension(originalFilename);
+        //检测文件类型
+        String file_type = file.getContentType();
+
+        //newFileName:
+        String newFileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) +
+                UUIDUtil.uuid().substring(6) + extension;
+
+        //根据学号进行上传文件:
+        String formPath = from_path + appid;
+        String dataDirPath = local_path + formPath;
+        File dataDir = new File(dataDirPath);//document
+        if (!dataDir.exists()) dataDir.mkdirs();
+
+        //upload:
+        try {
+            file.transferTo(new File(dataDir,newFileName));
+        } catch (IOException e) {
+            throw new GlobalException(CodeMsg.SERVER_ERROR);
+        }
+
+        return dataDirPath;
+    }
+}
