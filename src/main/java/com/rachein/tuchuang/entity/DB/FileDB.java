@@ -33,7 +33,7 @@ public class FileDB implements Serializable {
 
     @ApiModelProperty("文件后缀名 .xxx")
     @TableField("suffix")
-    private Integer suffix;
+    private String suffix;
 
     @ApiModelProperty("保存地址")
     @TableField("path")
@@ -41,19 +41,19 @@ public class FileDB implements Serializable {
 
     @ApiModelProperty("UUID保存的名字")
     @TableField("name")
-    private Integer name;
+    private String name;
 
     @ApiModelProperty("上传时的名字")
     @TableField("old_name")
-    private Integer oldName;
+    private String oldName;
 
     @ApiModelProperty("枚举类")
     @TableField("type")
-    private Integer type;
+    private String type;
 
     @ApiModelProperty("字节大小")
     @TableField("size")
-    private String size;
+    private Long size;
 
     @TableField(value = "gmt_create", fill = FieldFill.INSERT)
     private LocalDateTime gmtCreate;

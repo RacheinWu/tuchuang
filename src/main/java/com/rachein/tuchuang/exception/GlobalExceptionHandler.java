@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs(msg));//给状态码填充参数
         }
         else {
-            return Result.error(CodeMsg.ERROR_SERVER);
+            return Result.error(CodeMsg.SERVER_ERROR);
         }
 
 

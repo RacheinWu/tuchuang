@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -28,11 +29,14 @@ import java.util.Date;
 @Service
 public class FileServiceImpl extends ServiceImpl<FileMapper, FileDB> implements IFileService {
 
-    @Value("${file.path.from}")
+    @Value("${path.file.from}")
     private String from_path;
 
-    @Value("${file.path.local}")
+    @Value("${path.file.local}")
     private String local_path;
+
+    @Value("${path.url.local}")
+    private String local_url;
 
     @Override
     public String upload(MultipartFile file, String type, String appid) {
@@ -64,7 +68,24 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FileDB> implements 
         } catch (IOException e) {
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
+        //database-save：
 
-        return dataDirPath;
+        String network_path = local_url + "\\" + formPath + "\\" + newFileName;
+
+        FileDB fileDB = new FileDB();
+        fileDB.setName(newFileName);
+        fileDB.setOldName(originalFilename);
+        fileDB.setSize(size);
+        fileDB.setType(type);
+        fileDB.setPath(network_path);
+        fileDB.setSuffix(extension);
+        save(fileDB);
+
+        //进行上传到
+        return network_path;
+    }
+
+    @Override
+    public void batchUpload(List<MultipartFile> files, String type, String appid) {
     }
 }

@@ -15,6 +15,7 @@ public class CodeMsg {
     //通用：
     public static CodeMsg SUCCESS = new CodeMsg(200, "success");
     public static CodeMsg SERVER_ERROR = new CodeMsg(50001, "服务器发生异常！");
+    public static CodeMsg BIND_ERROR = new CodeMsg(50002, "参数错误！");
 
 
     //文件: 5001xx

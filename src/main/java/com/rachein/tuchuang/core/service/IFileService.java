@@ -4,6 +4,8 @@ import com.rachein.tuchuang.entity.DB.FileDB;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * <p>
  * 文件 服务类
@@ -15,4 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface IFileService extends IService<FileDB> {
 
     String upload(MultipartFile file, String type, String appid);
+
+    void batchUpload(List<MultipartFile> files, String type, String appid);
+
 }

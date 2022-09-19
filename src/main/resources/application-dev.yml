@@ -2,7 +2,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql:///survey?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    url: jdbc:mysql:///tuchuang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true
     # 数据库用户名&密码：
     username: root
     password: wuyuanjian0
@@ -12,8 +12,11 @@ server:
   port: 80
 
 
-file:
-  path:
-    from: \tuchuang\
-    loacl: C:\Users\Rache\Documents\file
 
+
+path:
+  file:
+    from: \tuchuang\
+    local: C:\Users\Rache\Documents\file
+  url:
+    loacl: http://192.168.31.151/

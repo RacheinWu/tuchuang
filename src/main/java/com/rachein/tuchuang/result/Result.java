@@ -25,6 +25,8 @@ public class Result<T> {
     //带参数
     public static <T> Result<T> success(String msg, T data) {return new Result<>(msg, data);}
 
+    public static <T> Result<T> success(T data) {return new Result<>("success", data);}
+
     //不带参数
     public static <T> Result<T> success(String msg) {return new Result<>(msg);}
 
@@ -42,6 +44,8 @@ public class Result<T> {
         this.data = data;
         this.code = 200;
     }
+
+
 
     private Result(String msg) {
         this.msg = msg;
